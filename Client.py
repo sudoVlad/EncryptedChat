@@ -1,9 +1,12 @@
 import socket
 import sys
-
+#from ElGamal import *
 
 #im not sure what the output will be here since we're doing both aes and elgamal
 def encrypt(message):
+		#generate random a
+		#elgamal = ElGamal(prime,message,a)
+		#message = ElGamal.encrypt()
     print("stub")
     return message
 
