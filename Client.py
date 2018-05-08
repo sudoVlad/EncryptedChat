@@ -5,7 +5,7 @@ import sys
 #im not sure what the output will be here since we're doing both aes and elgamal
 def encrypt(message):
 	#b = randomly generate b
-	#elgamal = ElGamal(prime, halfMask, g(	#this takes the public key)
+	#elgamal = ElGamal(prime, halfMask, g)	#this takes the public key)
 	#message = ElGamal.encrypt(b, message)
     print("stub")
     return message
