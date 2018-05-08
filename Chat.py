@@ -1,13 +1,21 @@
 import socket
+#from ElGamal import *
 
 #run Chat.py first
 #then run Client.py
 #type things into Client.py's terminal
 #they will be sent to Chat.py's socket
 
-def decrypt(msg):
+def publicKey():
+	#generate prime #make global
+	#generate a	#make global
+	#generate g	#creat this function
+
+def decrypt(cipher):
+	#elgamal = ElGamal(prime,halfMask, g)
+	#message = elgamal.decrypt(cipher)
     print("stub")
-    return msg
+    return message
 
 
 #AF_INET specifies the adress family of the socket.. whatever that means
