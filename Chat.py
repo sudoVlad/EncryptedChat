@@ -6,10 +6,10 @@ import socket
 #type things into Client.py's terminal
 #they will be sent to Chat.py's socket
 
-def publicKey():
+def getPublicKey():
 	#generate prime #make global
 	#generate a	#make global
-	#generate g	#creat this function
+	#generate g	#make global create this as a function
 
 def decrypt(cipher):
 	#elgamal = ElGamal(prime,halfMask, g)
