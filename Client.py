@@ -4,11 +4,9 @@ import sys
 
 #im not sure what the output will be here since we're doing both aes and elgamal
 def encrypt(message):
-	#generate random a
-	#generate random prime
-	#elgamal = ElGamal(prime,a)
-	#g = ElGamal.getG()
-	#message = ElGamal.encrypt()
+	#b = randomly generate b
+	#elgamal = ElGamal(prime, halfMask, g(	#this takes the public key)
+	#message = ElGamal.encrypt(b, message)
     print("stub")
     return message
 
