@@ -2,42 +2,50 @@
 # File: 		ElGamal.py
 # Version: 	Python3.6.4
 import math
-#from Pulverizor import *
+from Pulverizor import *
 
 class ElGamal:
 	def __init__(self, prime, halfMask, g):
-		#	self.prime = prime
-		#	self.halfMask = halfMask
-		#	self.g = g
+		self.prime = prime
+		self.halfMask = halfMask
+		self.g = g
 
+	#retuns an array of ascii numbers to represent the cipher
 	def encrypt(a, msg):
-		#fullMask = findFullMask(halfMask,a) % prime		#calcualte fullmask
+		fullMask = findFullMask(a)	
 		#encrypt each letter		
-		#cipher = [] #initialize our cipher array			
-		#for x in range(0, len(msg) - 1): 
-		#	msg[x] = convert2ASCII(msg[x])					#convert letters to ascii
-		#	cipher.append(findCipher(msg[x],fullMask))	#add ascii numbers to cipher array
-		#return cipher
+		cipher = [] 	
+		for x in range(0, len(msg) - 1): 
+			msg[x] = convert2ASCII(msg[x])							
+			cipher.append(findCipher(msg[x],fullMask))				
+		return cipher
 
-	def decrypt(cipher):
-		#invFullMask = pulverizor(prime, fullMask)		#calculate (fullmask)^-1
-		#decrypt each letter
-		#msg = []	#initialize our message array
-		#for x in range(0, len(cipher) - 1):
-		#	cipher[x] = findCipher(cipher[x], fullMask)	#multiply fullmask and ascii number
-		# 	msg.append(convert2Char(cipher[x])				#add ascii letter to message array
+	#returns an array of characters to represent the message
+	def decrypt(b, cipher):
+		decrypt each letter
+		fullMask = findFullMask(b)
+		msg = []	
+		for x in range(0, len(cipher) - 1):
+			cipher[x] = findMessage(cipher[x],fullMask)			
+		 	msg.append(convert2Char(cipher[x]))			
 	
-	def findFullMask(halfMask, a):
-		#return math.pow(halfMask,a) % prime				
+	#returns the halfmask raised to the secret value of the caller
+	def findFullMask(a):
+		return math.pow(self.halfMask,a) % self.prime				
 	
-	def findCipher(number, fullMask):
-		#return number * fullMask % prime
+	#returns the ascii represetnation of message and the full mask
+	def findCipher(asciiNum, fullMask):
+		return asciiNum * fullMask % self.prime
 
-	def findMessage(number, invFullMask):
-		#return number * invFullMask % prime
+	#returns the product of the cipher and inverted full mask
+	def findMessage(asciiNum, fullMask):
+		invFullMask = Pulverizor(self.prime, fullMask)
+		return asciiNum * invFullMask % prime
 
+	#returns ascii number of character
 	def convert2ASCII(letter):
-		#return ord(letter)
+		return ord(letter)
 	
-	def convert2Char(number):
-		#return chr(number)
+	#returns the character version of ascii number
+	def convert2Char(asciiNum):
+		return chr(asciiNum)
