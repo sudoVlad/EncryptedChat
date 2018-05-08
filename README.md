@@ -1,6 +1,6 @@
 # EncryptedChat
 
-## (Ignore this section if off Unix Based Machine)
+## How to Run the Program (Ignore this section if not using Unix Based Machine)
 1. Change Permisions
 ```
 chmod 777 *.py
