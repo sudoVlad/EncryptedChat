@@ -13,7 +13,7 @@ def getPublicKey():
 
 def decrypt(cipher):
 	#elgamal = ElGamal(prime,halfMask, g)
-	#message = elgamal.decrypt(cipher)
+	#message = elgamal.decrypt(a, cipher)
     print("stub")
     return message
 
