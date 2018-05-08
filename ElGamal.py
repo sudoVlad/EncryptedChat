@@ -1,13 +1,14 @@
 #! /usr/bin/python3
-# File: 	ElGamal.py
+# File: 		ElGamal.py
 # Version: 	Python3.6.4
 import math
+#from Pulverizor import *
 
 class ElGamal:
 	def __init__(self, prime, halfMask, g):
-			self.prime = prime
-			self.halfMask = halfMask
-			self.g = g
+		#	self.prime = prime
+		#	self.halfMask = halfMask
+		#	self.g = g
 
 	def encrypt(a, msg):
 		#fullMask = findFullMask(halfMask,a) % prime		#calcualte fullmask
