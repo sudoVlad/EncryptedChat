@@ -1,8 +1,9 @@
 import socket
-import math
 from Crypto.Util import number
-import random
-from ElGamal import *
+import re
+from Elgamal import *
+from aes import *
+import threading
 
 #run Chat.py first
 #then run Client.py
@@ -47,7 +48,11 @@ def getPublicKey(a, prime):
 # Parameters: a, cipher
 # Returns the decrypted message in an array
 def decrypt(cipher, pubKey, a):
-    return(elgamal_decrypt(cipher,pubKey,a))
+    m = ''
+    c = re.findall(r'\d+', cipher)
+    for i in range(0 ,len(c), 2):
+        m += elgamal_decrypt((int(c[i]),int(c[i+1])),pubKey,a)
+    return m
 
 #AF_INET specifies the adress family of the socket.. whatever that means
 #SOCK_STREAM specifies TCP connections
@@ -63,25 +68,25 @@ s.listen(5)
 def client(conn,addr):
     bit_length = conn.recv(2048).decode()
 
-    #prime = number.getPrime(int(bit_length))
-    prime = 1367
+    prime = number.getPrime(int(bit_length))
+    while not number.isPrime(((prime - 1)//2)):
+        prime = number.getPrime(int(bit_length))
 
     a = random.randint(1,prime - 1)
-    print("a: " + str(a))
     pubKey = getPublicKey(a,prime)
-
     pub_key_string = (str(pubKey[0]) + ", " + str(pubKey[1]) + ", "+ str(pubKey[2]))
     #prime,generator,halfmask
     conn.sendall(str.encode(pub_key_string))
+
+    aes_key = decrypt(conn.recv(2048).decode("utf-8"),pubKey,a)
+
     while True:
-
         #decode takes recieved byte code and turns it into ascii
-        message = conn.recv(2048).decode("utf-8")
-
-        if message:
+        aes_cipher = conn.recv(2048)
+        if aes_cipher:
 			#decrypt me!!
             #great we have the cipher
-            message = decrypt(message, pubKey, a)
+            message =(decrypt(decrypt_aes(aes_cipher,aes_key), pubKey, a))
             print("<from: " + str (addr[0]) + "> " + message)
         else:
             break
@@ -89,4 +94,4 @@ def client(conn,addr):
 
 while True:
     conn,addr = s.accept()
-    client(conn,addr)
+    threading._start_new_thread(client,(conn,addr))
