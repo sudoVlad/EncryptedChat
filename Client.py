@@ -1,6 +1,6 @@
 import socket
 import sys
-from Elgamal import *
+from ElGamal import *
 
 # encrypt returns the encrypted character
 # Parameters: b, message, pubKey
