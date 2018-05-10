@@ -2,7 +2,7 @@ import socket
 import math
 from Crypto.Util import number
 import random
-from Elgamal import *
+from ElGamal import *
 
 #run Chat.py first
 #then run Client.py
