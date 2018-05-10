@@ -1,17 +1,16 @@
 import socket
 import sys
 from ElGamal import *
+import random
 
-'''
-encrypt takes the secret key, message, and public key
-returns the encrypted message in form of an array
-'''
+# encrypt returns the encrypted character
+# Parameters: b, message, pubKey
+# returns the encrypted message in form of an array
 def encrypt(b, message, pubKey):
-	elgamal = ElGamal(prime, halfMask, g)	#this takes the public key)
+	elgamal = ElGamal(pubKey[0],pubKey[1],pubKey[2])
 	message = ElGamal.encrypt(b, message)
   	#print("stub")
   	return message
-
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 host = 'localhost'
@@ -26,7 +25,7 @@ print("Waiting for input, connected to: " + host + " on port " + str(port))
 print("type quit* to disconnect")
 
 #pubKey = public keys received from Chat.py
-#b = generate random b
+b = random.randint(100000,99999)	#generate random b
 
 while True:
 	msg = sys.stdin.readline()
