@@ -1,16 +1,16 @@
 import socket
 import sys
-from ElGamal import *
-import random
+from Elgamal import *
 
 # encrypt returns the encrypted character
 # Parameters: b, message, pubKey
 # returns the encrypted message in form of an array
-def encrypt(b, message, pubKey):
-	elgamal = ElGamal(pubKey[0],pubKey[1],pubKey[2])
-	message = ElGamal.encrypt(b, message)
-  	#print("stub")
-  	return message
+def encrypt(message, pubKey):
+    list_of_cipher_letters = []
+    for i in range(0,len(message) - 1):
+        cipher = elgamal_encrypt(message[i],pubKey)
+        list_of_cipher_letters.append(cipher)
+    return list_of_cipher_letters
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 host = 'localhost'
@@ -20,20 +20,37 @@ port = 5555
 s.connect((host,port))
 
 bit_length = input("Choose a bit length for the Elgamal prime: ")
+s.send(str.encode(bit_length))
+
+pubKey = s.recv(2048).decode()
+pubKeyList = pubKey.split(', ')
+
+#prime
+pubKeyList[0] = int(pubKeyList[0])
+#generator
+pubKeyList[1] = int(pubKeyList[1])
+#halfMask
+pubKeyList[2] = int(pubKeyList[2])
+
 aes_key = input("Choose a secret key for aes: ")
+
 print("Waiting for input, connected to: " + host + " on port " + str(port))
 print("type quit* to disconnect")
 
-#pubKey = public keys received from Chat.py
-b = random.randint(100000,99999)	#generate random b
+
 
 while True:
-	msg = sys.stdin.readline()
-	if (msg == "quit*\n"):
-		break
-   #ok here's where we encrypt
-   msg = encrypt(b,msg,pubKey)
-	#encode turns our string into byte code to be sent to the socket
-	s.send(str.encode(msg))
+    msg = sys.stdin.readline()
+    if (msg == "quit*\n"):
+        break
+    #great lets encrypt a message
+    cipher_list = encrypt(msg, pubKeyList)
+    cipher_string = ""
+    for i in range(0,len(cipher_list) - 1):
+        cipher_string += str(cipher_list[i])
+
+    #encode turns our string into byte code to be sent to the socket
+    #we send our elgamal encoded cipher to chat
+    s.send(str.encode(cipher_string))
 
 s.close()
